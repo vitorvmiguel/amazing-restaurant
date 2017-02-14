@@ -3,8 +3,9 @@ package bts.mdsd.main;
 import java.io.Serializable;
 
 /*
- **Class defining the Customer Orders
- */
+ *Class defining the Customer Orders, joining the customer name and one particular Dish of choice
+ *simple definition of constructor, getters and setters
+ **/
 
 public class Order {
 

@@ -1,5 +1,9 @@
 package bts.mdsd.util;
 
+/*
+ * HandleCsv is an utility class used for opening the Csv files and creating lists of objects from that
+ * */
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Serializable;
@@ -18,26 +22,31 @@ import bts.mdsd.main.Starter;
 
 public class HandleCsv {
 	
+	/*
+	 * Method readOrders receive the imput of the file name and searchs for it
+	 * */
 	public static List<Order> readOrders(String fileName) {
 		
+		//declaration of the list of orders to be filled from the csv
 		List<Order> orders = new ArrayList<>();
+		//finding the path to the file input
 		Path filePath = Paths.get(fileName);
-		
-		
+		// try catch block is used to create a buffer reading each single line of the csv file
+		// and handling possible exceptions without crashing the code
 		try (BufferedReader buffer = Files.newBufferedReader(filePath,
                 StandardCharsets.US_ASCII)) {
-			
+			// skiping the first line
 			buffer.readLine();
 			String line = buffer.readLine();
-			
+			// reading lines while they are not null
 			while (line != null) {
-				
+				// spliting the lines on commas the attributes into an array of strings 
 		   		 String[] attributes = line.split(",");
-						
+				// calling the method to create the Order object from the string arrays		
 				 Order order = createOrder(attributes);
-				 
+				 // adding the Order objects to the list of orders 
 				 orders.add((Order) order);
-				 
+				 // reads next line for continuing iteration 
 				 line = buffer.readLine();
 				 
 			}
@@ -45,11 +54,12 @@ public class HandleCsv {
 		} catch (IOException ioe) {
             ioe.printStackTrace();
         }
-			
+			// return the list of orders
 		return orders;
 		
 	}
-
+	// method createOrders parse the string arrays read into Order objects, which depending on the type of Dish also diferentiate
+	// the Dish object created
 	private static Order createOrder(String[] attributes)  {
 		String customerName = attributes[0];
 		String dishName = attributes[1];
@@ -72,7 +82,7 @@ public class HandleCsv {
 			
 		 }
 	}
-		
+	// method createDishList returns a list of dishes from parsing the list of orders	
 	public static List<Dish<? extends Serializable>> createDishList(List<Order> orderList)  {
 		List<Dish<? extends Serializable>> dishList = new ArrayList<>();
 		for(Order o: orderList){

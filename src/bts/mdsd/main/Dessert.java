@@ -1,5 +1,10 @@
 package bts.mdsd.main;
 
+/*
+ * Dessert is one extension of Dish and the generic type used is Integer, no particular details besides of implementing
+ *  the abstract class
+ *  */
+
 public class Dessert extends Dish <Integer> {
 	
 	private final String dishType = "Dessert";
@@ -26,7 +31,7 @@ public class Dessert extends Dish <Integer> {
 	
 	@Override
 	public String toString() {
-		return "Dish type is: " + this.dishType + " The dish name is: " + this.getDishName() ;
+		return "Dish type is: " + this.dishType + ", and the dish name is: " + this.getDishName() ;
 	}
 	
 	

@@ -1,5 +1,10 @@
 package bts.mdsd.main;
 
+/*
+ * MainCourse is one extension of Dish and the generic type used is String, no particular details besides of implementing
+ *  the abstract class
+ *  */
+
 public class MainCourse extends Dish <String> {
 
 	private final String dishType = "Main Course";
@@ -26,7 +31,7 @@ public class MainCourse extends Dish <String> {
 	
 	@Override
 	public String toString() {
-		return "Dish type is: " + this.dishType + " The dish name is: " + this.getDishName() ;
+		return "Dish type is: " + this.dishType + ", and the dish name is: " + this.getDishName() ;
 	}
 }
 

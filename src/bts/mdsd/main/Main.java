@@ -1,5 +1,11 @@
 package bts.mdsd.main;
 
+/*
+ * Main class for running the program and the menu of options
+ * 
+ * NOTE: THE MENU OPTIONS C AND E RETURN THE VALUES CORRECTLY BUT THEY RUN THE MENU AGAIN HIDING THE ANSWER, TRYING TO FIX IT
+ * */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +24,7 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		
+		// Menu parameters
 		String inputMenu = "z";
 		String inputString = null;
 		Integer inputInteger = null;
@@ -26,57 +33,74 @@ public class Main {
 		List<Dish<? extends Serializable>> dishes = new ArrayList<>();
 		scan = new Scanner(System.in);
 		
-		//	online_order_sample.csv
-
+		// DEFAULT INPUT FILE TEST	'online_order_sample.csv' 
+		
+		// Menu declaration
 		do {
 			switch(inputMenu) {
 			case "z":
-				p("Chose the corresponding item by typing the index number followed by Enter.");
-				p("----------------------------------------------------------------------------\n\n");
-				p("a - Import CSV");
-				p("b - Count the number of Orders");
-				p("c - Select order from index");
-				p("d - Retrieve all orders");
-				p("e - Select dish from index");
-				p("f - Retrieve all dishes");
-				p("g - Select all dishes of same type");
-				p("h - Select all dishes of same feature");
-				p("i - Percentage of dishes ordered that correspond to one type");
-				p("\n ----------------------------------------------------------------------------");
-				p("\nq - Exit program");
+				p("┌────────────────────────────────────────────────────────────────────────────┐");
+				p("│ Chose the corresponding item by typing the index letter followed by Enter. │");
+				p("└────────────────────────────────────────────────────────────────────────────┘");
+				p("\n");
+				p("	a - Import CSV");
+				p("	b - Count the number of Orders");
+				p("	c - Select order from index");
+				p("	d - Retrieve all orders");
+				p("	e - Select dish from index");
+				p("	f - Retrieve all dishes");
+				p("	g - Select all dishes of same type");
+				p("	h - Select all dishes of same feature");
+				p("	i - Percentage of dishes ordered that correspond to one type");
+				p("\n");
+				p("┌────────────────────────────────────────────────────────────────────────────┐");
+				p("│      q - Exit program                                                      │");
+				p("└────────────────────────────────────────────────────────────────────────────┘");
+				p("\n");
 				
-				p("\n ----------------------------------------------------------------------------");
-				
-				inputMenu = scan.nextLine();
+				inputMenu = scan.nextLine().toLowerCase();
 				break;
 			case "a":
+				p("\n******************************************************************************");
 				p("\nType the filename and press Enter: ");
 				inputString = scan.nextLine();
 				orders = HandleCsv.readOrders(inputString);
 				dishes = HandleCsv.createDishList(orders);
-				p("\nFile imported!");
-				p("\n ----------------------------------------------------------------------------");
+				p("\n*** File imported! ***");
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "b":	
+				p("\n******************************************************************************");
 				p("\nThe number of orders is: " + operations.getNumberOrders(orders));
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
+				
+	/*
+	* I DON'T KNOW WHY AFTER RUNNING THE OPTION C IT DISPLAYS THE RESULT BUT, RUNS THE MENU AGAIN WITH AN INVALID INPUT
+	* */	
+					
 			case "c":
+				p("\n******************************************************************************");
 				p("\nPlease type the index number corresponding to the order you want:");
 				inputInteger = scan.nextInt();
 				p("\nThe order belongs to: " + operations.getOrder(orders, inputInteger).getOrderCustomerName() + 
-						" and is a, " + operations.getOrder(orders, inputInteger).getOrderDish());
-				p("\n ----------------------------------------------------------------------------");
+						", and is a, " + operations.getOrder(orders, inputInteger).getOrderDish());
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "d":
+				p("\n******************************************************************************");
 				p(operations.getAllOrdersToString(orders));
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
+	/*
+	* I DON'T KNOW WHY AFTER RUNNING THE OPTION E IT DISPLAYS THE RESULT BUT, RUNS THE MENU AGAIN WITH AN INVALID INPUT
+	* */
 			case "e":
+				p("\n******************************************************************************");
 				p("\nPlease type the index number corresponding to the order you want:");
 				inputInteger = scan.nextInt();
 				p("\nThe dish: " + operations.getDish(dishes, inputInteger).getDishName() + 
@@ -86,32 +110,43 @@ public class Main {
 						" sea food dish: " + operations.getDish(dishes, inputInteger).isSfd()  + 
 						" vegetarian dish: " + operations.getDish(dishes, inputInteger).isVgd() + 
 						" extra: " + operations.getDish(dishes, inputInteger).getExtra());
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "f":
+				p("\n******************************************************************************");
 				p(operations.getAllDishToString(dishes));
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "g":
+				p("\n******************************************************************************");
 				p("\nType the dish type (Starter, MainCourse, Dessert) and press Enter: ");
-				//inputString = scan.nextLine();
-				//p(dishes.get(0).getDishtype());
-				p(operations.getDishesByType(dishes, "Starter").toString());
-				p("\n ----------------------------------------------------------------------------");
+				inputString = scan.nextLine();
+				p(operations.getDishesByType(dishes, inputString).toString());
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "h":
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************");
+				p("\nType the dish feature (gfd, vgd, sfd, hmd) and press Enter: ");
+				inputString = scan.nextLine();
+				p(operations.getDishesByFeature(dishes, inputString).toString());
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			case "i":
-				p("\n ----------------------------------------------------------------------------");
+				p("\n******************************************************************************");
+				p("\nType the dish type (Starter, MainCourse, Dessert) and press Enter: ");
+				inputString = scan.nextLine();
+				p(operations.getStatsByDishType(dishes, inputString));
+				p("\n******************************************************************************\n");
 				inputMenu = "z";
 				break;
 			default:
-				p("Unvalid option, please select one valid menu option again.");
+				p("\n/*****************************************************************************/");
+				p("/*    Unvalid option, please select one valid menu option again.             */");
+				p("/*****************************************************************************/\n");
 				if(inputMenu == "q"){
 					inputMenu = "q";
 				} else {

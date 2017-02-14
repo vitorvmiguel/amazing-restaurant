@@ -1,5 +1,10 @@
 package bts.mdsd.main;
 
+/*
+ * Starter is one extension of Dish and the generic type used is String, no particular details besides of implementing
+ *  the abstract class
+ *  */
+
 public class Starter extends Dish <String> {
 	
 	private final String dishType = "Starter";
@@ -27,7 +32,7 @@ public class Starter extends Dish <String> {
 	
 	@Override
 	public String toString() {
-		return "Dish type is: " + this.dishType + " The dish name is: " + this.getDishName() ;
+		return "Dish type is: " + this.dishType + ", and the dish name is: " + this.getDishName() ;
 	}
 
 
